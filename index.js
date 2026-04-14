@@ -33,7 +33,9 @@ const displayData = (obj) => {
   const editButton = document.createElement("button");
 
   editButton.textContent = "Edit";
-
+  editButton.addEventListener("click", () => {
+    editData(obj);
+  });
   li.textContent =
     obj.expenseamount + "-" + obj.Choose_a_category + "-" + obj.description;
   li.appendChild(deleteButton);
@@ -52,5 +54,20 @@ const deleteData = (id, li) => {
   }
   localStorage.setItem("expenses", JSON.stringify(updatedList));
   li.remove();
+};
+
+const editData = (obj) => {
+   document.querySelector('[name="expenseamount"]').value = obj.expenseamount;
+  document.querySelector('[name="Choose_a_category"]').value =
+    obj.Choose_a_category;
+  document.querySelector('[name="description"]').value = obj.description;
+  let data = JSON.parse(localStorage.getItem("expenses")) || [];
+
+  data = data.filter((item) => item.id !== obj.id);
+
+  localStorage.setItem("expenses", JSON.stringify(data));
+
+  document.querySelector("ul").innerHTML = "";
+  display();
 };
 window.onload = display;
