@@ -14,6 +14,7 @@ const handleSubmit = (event) => {
   data.push(obj);
   localStorage.setItem("expenses", JSON.stringify(data));
   displayData(obj);
+  event.target.reset();
 };
 
 const display = () => {
@@ -24,20 +25,29 @@ const display = () => {
 const displayData = (obj) => {
   const ul = document.querySelector("ul");
   const li = document.createElement("li");
+  li.style.display = "flex";
+  li.style.gap = "5px";
+  li.style.alignItems = "center";
+  li.style.paddingBottom = "5px";
   const deleteButton = document.createElement("button");
-  deleteButton.textContent = "Delete";
+  deleteButton.textContent = "Delete Expense";
   li.id = obj.id;
   deleteButton.addEventListener("click", () => {
     deleteData(obj.id, li);
   });
   const editButton = document.createElement("button");
 
-  editButton.textContent = "Edit";
+  editButton.textContent = "Edit Expense";
   editButton.addEventListener("click", () => {
     editData(obj);
   });
   li.textContent =
-    obj.expenseamount + "-" + obj.Choose_a_category + "-" + obj.description;
+    obj.expenseamount +
+    " - " +
+    obj.Choose_a_category +
+    " - " +
+    obj.description +
+    " ";
   li.appendChild(deleteButton);
 
   li.appendChild(editButton);
@@ -57,7 +67,7 @@ const deleteData = (id, li) => {
 };
 
 const editData = (obj) => {
-   document.querySelector('[name="expenseamount"]').value = obj.expenseamount;
+  document.querySelector('[name="expenseamount"]').value = obj.expenseamount;
   document.querySelector('[name="Choose_a_category"]').value =
     obj.Choose_a_category;
   document.querySelector('[name="description"]').value = obj.description;
